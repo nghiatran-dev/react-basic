@@ -4,12 +4,11 @@ import editIcon from '../../assets/edit.png';
 
 const TodoList = (props) => {
     const { todoList } = props;
-    console.log('>>> Check props todoList: ', JSON.stringify(todoList));
     return (
         <div className='todo-list'>
-            {todoList.map((item, index) => {
+            {todoList.map((item) => {
                 return (
-                    <div className="todo-list--item" key={index}>
+                    <div className="todo-list--item" key={item.id}>
                         <div>{item.content}</div>
                         <div className='item--action'>
                             <img src={editIcon} className='icon action--edit' alt="Edit item" />

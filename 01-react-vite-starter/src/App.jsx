@@ -5,10 +5,14 @@ import emptyImage from './assets/images/empty-list.jpg';
 
 const App = () => {
   const name = 'Victor Tran';
+  const addNewTodo = (item) => {
+    alert(`Add new item: ${item}`);
+  };
+
   return (
     <div className="todo-container">
       <div className="todo-title">TODO LIST</div>
-      <TodoNew />
+      <TodoNew addNewTodo={addNewTodo}/>
       <TodoList 
         name={name}
       />

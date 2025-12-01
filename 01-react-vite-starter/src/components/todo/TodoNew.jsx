@@ -1,7 +1,12 @@
+import { useState } from 'react';
+
 const TodoNew = (props) => {
 
+  // useState hook (getter + setter)
+  const [newItem, setNewItem] = useState('Victor Tran');
+
   const handleClickAdd = () => {
-    alert('Click button Add');
+    console.log(`Check input value: ${newItem}`);
   };
 
   // option 1:
@@ -10,8 +15,9 @@ const TodoNew = (props) => {
   };
 
   // option 2:
-  const handleOnchangeInput2 = (newItem) => {
-    console.log(`Input change value: ${newItem}`);
+  const handleOnchangeInput2 = (inputValue) => {
+    setNewItem(inputValue);
+    console.log(`Input change value: ${inputValue}`);
   };
 
   return (
@@ -21,6 +27,7 @@ const TodoNew = (props) => {
         {/* option 2 */}
         <input onChange={ (event) => handleOnchangeInput2(event.target.value) } type="text" />
         <button onClick={handleClickAdd}>Add</button>
+        <div>My text input = {newItem}</div>
     </div>
   );
 };

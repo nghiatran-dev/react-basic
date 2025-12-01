@@ -1,18 +1,20 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const TodoNew = (props) => {
+  const { addNewItem } = props;
 
   // useState hook (getter + setter)
   const [newItem, setNewItem] = useState('Victor Tran');
 
   const handleClickAdd = () => {
-    console.log(`Check input value: ${newItem}`);
+    addNewItem(newItem);
   };
 
   // option 1:
-  const handleOnchangeInput = (event) => {
-    console.log(`Input change value: ${event.target.value}`);
-  };
+  // const handleOnchangeInput = (event) => {
+  //   console.log(`Input change value: ${event.target.value}`);
+  // };
 
   // option 2:
   const handleOnchangeInput2 = (inputValue) => {
@@ -30,6 +32,10 @@ const TodoNew = (props) => {
         <div>My text input = {newItem}</div>
     </div>
   );
+};
+
+TodoNew.propTypes = {
+  addNewItem: PropTypes.func.isRequired,
 };
 
 export default TodoNew;

@@ -6,20 +6,25 @@ import emptyImage from './assets/images/empty-list.jpg';
 
 const App = () => {
   const [todoList, setTodoList] = useState([
-    { id: 1, title: 'Learn ReactJS' },
-    { id: 2, title: 'Learn VueJS' },
-    { id: 3, title: 'Learn Angular' },
-    { id: 4, title: 'Learn Typescript' }
+    { id: 1, content: 'Learn VueJS' },
+    { id: 2, content: 'Learn ReactJS' },
+    { id: 3, content: 'Learn Angular' },
+    { id: 4, content: 'Learn Typescript' }
   ]);
 
-  const addNewTodo = (item) => {
-    alert(`Add new item: ${item}`);
+  const addNewItem = (item) => {
+    // update todoList state
+    setTodoList([...todoList, { id: randomId(1, 1000), content: item }]);
   };
+
+  const randomId = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   return (
     <div className="todo-container">
       <div className="todo-title">TODO LIST</div>
-      <TodoNew addNewTodo={addNewTodo}/>
+      <TodoNew addNewItem={addNewItem}/>
       <TodoList 
         todoList={todoList}
       />

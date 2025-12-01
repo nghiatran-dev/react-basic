@@ -5,21 +5,21 @@ const TodoNew = (props) => {
   const { addNewItem } = props;
 
   // useState hook (getter + setter)
-  const [newItem, setNewItem] = useState('Victor Tran');
+  const [valueInput, setValueInput] = useState('');
 
   const handleClickAdd = () => {
-    addNewItem(newItem);
+    addNewItem(valueInput);
+    setValueInput('');
   };
 
   // option 1:
-  // const handleOnchangeInput = (event) => {
+  // const handleOnchangeInput1 = (event) => {
   //   console.log(`Input change value: ${event.target.value}`);
   // };
 
   // option 2:
-  const handleOnchangeInput2 = (inputValue) => {
-    setNewItem(inputValue);
-    console.log(`Input change value: ${inputValue}`);
+  const handleOnchangeInput = (inputValue) => {
+    setValueInput(inputValue);
   };
 
   return (
@@ -27,9 +27,8 @@ const TodoNew = (props) => {
         {/* option 1 */}
         {/* <input onChange={handleOnchangeInput} type="text" /> */}
         {/* option 2 */}
-        <input onChange={ (event) => handleOnchangeInput2(event.target.value) } type="text" />
+        <input value={valueInput} onChange={ (event) => handleOnchangeInput(event.target.value) } type="text" />
         <button onClick={handleClickAdd}>Add</button>
-        <div>My text input = {newItem}</div>
     </div>
   );
 };

@@ -60,6 +60,23 @@ button {
     padding: 15px;
 }
 
+.todo-list--item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item--action {
+    display: flex;
+    gap: 15px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
 .todo-empty {
     display: flex;
     flex-direction: column;

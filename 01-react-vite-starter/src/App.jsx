@@ -5,6 +5,7 @@ import TodoList from './components/todo/TodoList';
 import emptyImage from './assets/images/empty-list.jpg';
 
 const App = () => {
+  const [itemEdit, setItemEdit] = useState(null);
   const [todoList, setTodoList] = useState([
     { id: 1, content: 'Learn VueJS' },
     { id: 2, content: 'Learn ReactJS' },
@@ -12,9 +13,34 @@ const App = () => {
     { id: 4, content: 'Learn Typescript' }
   ]);
 
-  const addNewItem = (item) => {
-    // update todoList state
-    setTodoList([...todoList, { id: randomId(1, 1000), content: item }]);
+  const handleAddNewItem = (item) => {
+    if (itemEdit) {
+      // CASE: update item to todoList
+      updateItem(itemEdit.id, item);
+      setItemEdit(null);
+    } else {
+      // CASE: add new item to todoList
+      setTodoList([...todoList, { id: randomId(1, 1000), content: item }]);
+    }
+  };
+
+  const handleEditItem = (item) => {
+    setItemEdit(item);
+  }
+
+  const handleDeleteItem = (id) => {
+    const newTodoList = todoList.filter((item) => item.id !== id);
+    setTodoList(newTodoList);
+  }
+
+  const updateItem = (id, newContent) => {
+    const newTodoList = todoList.map((item) => {
+      if (item.id === id) {
+        return { ...item, content: newContent };
+      }
+      return item;
+    });
+    setTodoList(newTodoList);
   };
 
   const randomId = (min, max) => {
@@ -24,10 +50,10 @@ const App = () => {
   return (
     <div className="todo-container">
       <div className="todo-title">TODO LIST</div>
-      <TodoNew addNewItem={addNewItem} />
+      <TodoNew itemEdit={itemEdit} handleAddNewItem={handleAddNewItem} />
       {
         todoList.length > 0 ?
-          <TodoList todoList={todoList} /> :
+          <TodoList todoList={todoList} handleUpdateItem={handleEditItem} handleDeleteItem={handleDeleteItem} /> :
           <div className='todo-empty'>
             <img src={emptyImage} className='logo' alt="Todo List Empty" />
           </div>

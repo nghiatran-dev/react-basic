@@ -1,14 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 const TodoNew = (props) => {
-  const { addNewItem } = props;
+  const { itemEdit, handleAddNewItem } = props;
 
   // useState hook (getter + setter)
   const [valueInput, setValueInput] = useState('');
 
-  const handleClickAdd = () => {
-    addNewItem(valueInput);
+  const handleClickAddButton = () => {
+    handleAddNewItem(valueInput);
     setValueInput('');
   };
 
@@ -22,19 +22,26 @@ const TodoNew = (props) => {
     setValueInput(inputValue);
   };
 
+  React.useEffect(() => {
+    if (itemEdit) {
+      setValueInput(itemEdit.content);
+    }
+  }, [itemEdit]);
+
   return (
     <div className='todo-new'>
         {/* option 1 */}
         {/* <input onChange={handleOnchangeInput} type="text" /> */}
         {/* option 2 */}
         <input value={valueInput} onChange={ (event) => handleOnchangeInput(event.target.value) } type="text" />
-        <button onClick={handleClickAdd}>Add</button>
+        <button onClick={handleClickAddButton}>{itemEdit ? 'Update' : 'Add'}</button>
     </div>
   );
 };
 
 TodoNew.propTypes = {
-  addNewItem: PropTypes.func.isRequired,
+  handleAddNewItem: PropTypes.func,
+  itemEdit: PropTypes.object,
 };
 
 export default TodoNew;

@@ -24,13 +24,14 @@ const App = () => {
   return (
     <div className="todo-container">
       <div className="todo-title">TODO LIST</div>
-      <TodoNew addNewItem={addNewItem}/>
-      <TodoList 
-        todoList={todoList}
-      />
-      <div className='todo-empty'>
-        <img src={emptyImage} className='logo' alt="Todo List Empty" />
-      </div>
+      <TodoNew addNewItem={addNewItem} />
+      {
+        todoList.length > 0 ?
+          <TodoList todoList={todoList} /> :
+          <div className='todo-empty'>
+            <img src={emptyImage} className='logo' alt="Todo List Empty" />
+          </div>
+      }
     </div>
   )
 }

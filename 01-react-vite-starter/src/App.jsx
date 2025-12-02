@@ -5,6 +5,7 @@ import Footer from './components/layout/footer';
 import TodoNew from './components/todo/TodoNew';
 import TodoList from './components/todo/TodoList';
 import emptyImage from './assets/images/empty-list.jpg';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   const [itemEdit, setItemEdit] = useState(null);
@@ -64,6 +65,7 @@ const App = () => {
             </div>
         }
       </div>
+      <Outlet />
 
       <Footer />
     </>

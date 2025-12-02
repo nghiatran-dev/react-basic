@@ -7,6 +7,10 @@ const UserForm = () => {
     const [password, setPassword] = React.useState("");
     const [phoneNumber, setPhoneNumber] = React.useState("");
 
+    const handleCreateUser = () => {
+        console.log({ fullName, email, password, phoneNumber });
+    };
+
     return (
         <div className="user-form" style={{margin: "20px 0"}}>
             <div style={{display: "flex", gap: "15px", flexDirection: "column"}}>
@@ -27,7 +31,7 @@ const UserForm = () => {
                     <Input value={phoneNumber} onChange={(event) => setPhoneNumber(event.target.value)}/>
                 </div>
                 <div>
-                    <Button type="primary">Create user</Button>
+                    <Button type="primary" onClick={() => handleCreateUser()}>Create user</Button>
                 </div>
             </div>
         </div>

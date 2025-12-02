@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './components/todo/todo.css';
+import Header from './components/layout/header';
+import Footer from './components/layout/footer';
 import TodoNew from './components/todo/TodoNew';
 import TodoList from './components/todo/TodoList';
 import emptyImage from './assets/images/empty-list.jpg';
@@ -48,17 +50,23 @@ const App = () => {
   }
 
   return (
-    <div className="todo-container">
-      <div className="todo-title">TODO LIST</div>
-      <TodoNew itemEdit={itemEdit} handleAddNewItem={handleAddNewItem} />
-      {
-        todoList.length > 0 ?
-          <TodoList todoList={todoList} handleUpdateItem={handleEditItem} handleDeleteItem={handleDeleteItem} /> :
-          <div className='todo-empty'>
-            <img src={emptyImage} className='logo' alt="Todo List Empty" />
-          </div>
-      }
-    </div>
+    <>
+      <Header />
+
+      <div className="todo-container">
+        <div className="todo-title">TODO LIST</div>
+        <TodoNew itemEdit={itemEdit} handleAddNewItem={handleAddNewItem} />
+        {
+          todoList.length > 0 ?
+            <TodoList todoList={todoList} handleUpdateItem={handleEditItem} handleDeleteItem={handleDeleteItem} /> :
+            <div className='todo-empty'>
+              <img src={emptyImage} className='logo' alt="Todo List Empty" />
+            </div>
+        }
+      </div>
+
+      <Footer />
+    </>
   )
 }
 

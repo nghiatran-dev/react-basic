@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Input, notification } from "antd";
-import { createUser } from "../../services/api.service";
+import { createUser, fetchUsers } from "../../services/api.service";
 
 const UserForm = () => {
     const [fullName, setFullName] = React.useState("");

@@ -33,7 +33,7 @@ const TodoNew = (props) => {
         {/* option 1 */}
         {/* <input onChange={handleOnchangeInput} type="text" /> */}
         {/* option 2 */}
-        <input value={valueInput} onChange={ (event) => handleOnchangeInput(event.target.value) } type="text" />
+        <input className='todo-input' value={valueInput} onChange={ (event) => handleOnchangeInput(event.target.value) } type="text" />
         <button onClick={handleClickAddButton}>{itemEdit ? 'Update' : 'Add'}</button>
     </div>
   );

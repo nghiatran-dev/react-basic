@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Table } from 'antd';
 import { fetchUsers } from '../../services/api.service';
 
 const UserTable = () => {

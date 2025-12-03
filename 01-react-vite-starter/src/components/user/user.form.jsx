@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Button, Modal, notification } from "antd";
 import { Flex, Input } from 'antd';
 import { createUser } from "../../services/api.service";
+import PropTypes from 'prop-types';
 
-const UserForm = () => {
+const UserForm = (props) => {
+    const { loadUsers } = props;
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -17,6 +19,10 @@ const UserForm = () => {
                 message: 'Create User Success',
                 description: `User ${res.data.fullName} has been created.`,
             });
+
+            // reload list users
+            await loadUsers();
+
         } else {
             notification.error({
                 message: 'Create User Error',
@@ -24,9 +30,17 @@ const UserForm = () => {
             });
         }
 
-        // close modal
-        setIsModalOpen(false);
+        // close modal clear data
+        resetModalAndClose(false);
     };
+
+    const resetModalAndClose = () => {
+        setIsModalOpen(false);
+        setFullName("");
+        setEmail("");
+        setPassword("");
+        setPhoneNumber("");
+    }
 
     return (
         <div className="user-form" style={{margin: "20px 0"}}>
@@ -42,7 +56,7 @@ const UserForm = () => {
                 closable={{ 'aria-label': 'Custom Close Button' }}
                 open={isModalOpen}
                 onOk={() => handleSubmitForm()}
-                onCancel={() => setIsModalOpen(false)}
+                onCancel={() => resetModalAndClose()}
                 maskClosable={false}
                 okText="Create"
             >
@@ -67,6 +81,11 @@ const UserForm = () => {
             </Modal>
         </div>
     );
+};
+
+
+UserForm.propTypes = {
+    loadUsers: PropTypes.func,
 };
 
 export default UserForm;

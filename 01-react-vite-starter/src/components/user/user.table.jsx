@@ -1,28 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Table } from 'antd';
-import { fetchUsers } from '../../services/api.service';
 
-const UserTable = () => {
-    const [listUsers, setListUsers] = useState([]);
+import { Table, Flex, Tag } from 'antd';
+import PropTypes from 'prop-types';
 
-    useEffect(() => {
-        console.log('>>> 2. Updated');
-        loadUsers();
-    }, []);
-
-    const loadUsers = async () => {
-        const res = await fetchUsers();
-        setListUsers(res.data);
-    };
-
-    console.log('>>> 1. Mounted');
+const UserTable = (props) => {
+    const { listUsers } = props;
 
     const columns = [
-        {
-            title: 'No.',
-            dataIndex: '_id',
-            key: '_id'
-        },
         {
             title: 'Full Name',
             dataIndex: 'fullName'
@@ -35,11 +18,33 @@ const UserTable = () => {
             title: 'Phone Number',
             dataIndex: 'phone'
         },
+        {
+            title: 'Role',
+            dataIndex: 'role'
+        },
+        {
+            title: 'Status',
+            dataIndex: 'isActive',
+            render: (isActive) => {
+                const color = isActive ? 'success' : 'default';
+                return (
+                    <Flex gap="small" align="center" wrap>
+                        <Tag color={color}>
+                            {isActive ? 'ACTIVE' : 'INACTIVE'}
+                        </Tag>
+                    </Flex>
+                );
+            },
+        },
     ];
 
     return (
         <Table columns={columns} dataSource={listUsers} rowKey={"_id"} />
     );
+};
+
+UserTable.propTypes = {
+    listUsers: PropTypes.array,
 };
 
 export default UserTable;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchUsers } from '../services/api.service';
+import { apiFetchUsers } from '../services/api.service';
 import UserForm from '../components/user/user.form';
 import UserTable from '../components/user/user.table';
 import UserModal from '../components/user/user.modal';
@@ -14,7 +14,7 @@ const UserPage = () => {
     }, []);
 
     const loadUsers = async () => {
-        const res = await fetchUsers();
+        const res = await apiFetchUsers();
         setListUsers(res.data);
     };
 

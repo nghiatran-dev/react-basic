@@ -1,10 +1,20 @@
 
+import { useState } from 'react';
 import { Table, Flex, Tag, Space } from 'antd';
-import PropTypes from 'prop-types';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import PropTypes from 'prop-types';
+import UserDetail from './user.detail.jsx';
 
 const UserTable = (props) => {
     const { listUsers, handleClickButtonEdit } = props;
+
+    const [detailUser, setDetailUser] = useState(null);
+    const [isShowDetailUser, setIsShowDetailUser] = useState(false);
+
+    const showUserDetail = (record) => {
+        setDetailUser(record);
+        setIsShowDetailUser(true);
+    }
 
     const columns = [
         {
@@ -12,7 +22,7 @@ const UserTable = (props) => {
             dataIndex: 'fullName',
             render: (_, record) => (
                 <>
-                    <a href='#'>{record.fullName}</a>
+                    <a onClick={() => showUserDetail(record)}>{record.fullName}</a>
                 </>
             ),
         },
@@ -58,13 +68,21 @@ const UserTable = (props) => {
     ];
 
     return (
-        <Table columns={columns} dataSource={listUsers} rowKey={"_id"} />
+        <>
+            <Table columns={columns} dataSource={listUsers} rowKey={"_id"} />
+            <UserDetail
+                detailUser={detailUser}
+                isShowDetailUser={isShowDetailUser}
+                setDetailUser={setDetailUser}
+                setIsShowDetailUser={setIsShowDetailUser}
+            />
+        </>
     );
 };
 
 UserTable.propTypes = {
     listUsers: PropTypes.array,
-    handleClickButtonEdit: PropTypes.func,
+    handleClickButtonEdit: PropTypes.func
 };
 
 export default UserTable;

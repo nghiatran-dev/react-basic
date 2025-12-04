@@ -1,15 +1,36 @@
 
 import { useState } from 'react';
-import { Table, Flex, Tag, Space } from 'antd';
+import { Table, Flex, Tag, Space, Popconfirm, Button, notification } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import UserDetail from './user.detail.jsx';
+import { apiDeleteUser } from '../../services/api.service.js';
 
 const UserTable = (props) => {
-    const { listUsers, handleClickButtonEdit } = props;
+    const { listUsers, loadUsers, handleClickButtonEdit } = props;
 
     const [detailUser, setDetailUser] = useState(null);
     const [isShowDetailUser, setIsShowDetailUser] = useState(false);
+
+    const handleDeleteUser = async(id) => {
+        console.log(id);
+        const res = await apiDeleteUser(id);
+        if (res.data) {
+            notification.success({
+                message: 'Delete user success',
+                description: `User has been deleted.`,
+            });
+
+            // reload list users
+            await loadUsers();
+
+        } else {
+            notification.error({
+                message: 'Delete user error',
+                description: JSON.stringify(res.error.message),
+            });
+        }
+    };
 
     const showUserDetail = (record) => {
         setDetailUser(record);
@@ -61,7 +82,16 @@ const UserTable = (props) => {
                         onClick={() => handleClickButtonEdit(record)}
                         style={{ color: 'orange'}}
                     />
-                    <DeleteOutlined style={{ color: 'red'}}/>
+                    <Popconfirm
+                        placement="left"
+                        title="Delete user"
+                        description={`Are you sure to delete this user [${record.fullName}]?`}
+                        okText="Confirm"
+                        cancelText="No"
+                        onConfirm={() => handleDeleteUser(record._id)}
+                    >
+                        <Button><DeleteOutlined style={{ color: 'red'}}/></Button>
+                    </Popconfirm>
                 </Space>
             ),
         },
@@ -82,6 +112,7 @@ const UserTable = (props) => {
 
 UserTable.propTypes = {
     listUsers: PropTypes.array,
+    loadUsers: PropTypes.func,
     handleClickButtonEdit: PropTypes.func
 };
 

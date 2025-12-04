@@ -28,6 +28,7 @@ const UserPage = () => {
             <UserForm loadUsers={loadUsers} setIsModalOpen={setIsModalOpen} />
             <UserTable 
                 listUsers={listUsers}
+                loadUsers={loadUsers}
                 handleClickButtonEdit={handleClickButtonEdit}
             />
             <UserModal

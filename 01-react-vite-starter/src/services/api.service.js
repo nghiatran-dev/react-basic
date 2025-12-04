@@ -1,12 +1,13 @@
 import axios from "./axios.customize";
 
+const API_USER_ENDPOINT = '/api/v1/user';
 const apiFetchUsers = () => {
-    const apiUrl = '/api/v1/user';
+    const apiUrl = API_USER_ENDPOINT;
     return axios.get(apiUrl);
 };
 
 const apiCreateUser = (data) => {
-    const apiUrl = '/api/v1/user';
+    const apiUrl = API_USER_ENDPOINT;
     const payload = { 
         fullName: data.fullName,
         email: data.email,
@@ -17,7 +18,7 @@ const apiCreateUser = (data) => {
 };
 
 const apiUpdateUser = (data) => {
-    const apiUrl = '/api/v1/user';
+    const apiUrl = API_USER_ENDPOINT;
     const payload = { 
         _id: data.id,
         fullName: data.fullName,
@@ -26,8 +27,14 @@ const apiUpdateUser = (data) => {
     return axios.put(apiUrl, payload);
 };
 
+const apiDeleteUser = (id) => {
+    const apiUrl = `${API_USER_ENDPOINT}/${id}`;
+    return axios.delete(apiUrl);
+}
+
 export {
     apiFetchUsers,
     apiCreateUser,
-    apiUpdateUser
+    apiUpdateUser,
+    apiDeleteUser
 }

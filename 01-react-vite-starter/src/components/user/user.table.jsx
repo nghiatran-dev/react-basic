@@ -1,14 +1,20 @@
 
-import { Table, Flex, Tag } from 'antd';
+import { Table, Flex, Tag, Space } from 'antd';
 import PropTypes from 'prop-types';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 const UserTable = (props) => {
-    const { listUsers } = props;
+    const { listUsers, handleClickButtonEdit } = props;
 
     const columns = [
         {
             title: 'Full Name',
-            dataIndex: 'fullName'
+            dataIndex: 'fullName',
+            render: (_, record) => (
+                <>
+                    <a href='#'>{record.fullName}</a>
+                </>
+            ),
         },
         {
             title: 'Email',
@@ -36,6 +42,19 @@ const UserTable = (props) => {
                 );
             },
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+                <Space size="middle">
+                    <EditOutlined
+                        onClick={() => handleClickButtonEdit(record)}
+                        style={{ color: 'orange'}}
+                    />
+                    <DeleteOutlined style={{ color: 'red'}}/>
+                </Space>
+            ),
+        },
     ];
 
     return (
@@ -45,6 +64,7 @@ const UserTable = (props) => {
 
 UserTable.propTypes = {
     listUsers: PropTypes.array,
+    handleClickButtonEdit: PropTypes.func,
 };
 
 export default UserTable;

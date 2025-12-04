@@ -1,11 +1,11 @@
 import axios from "./axios.customize";
 
-const fetchUsers = () => {
+const apiFetchUsers = () => {
     const apiUrl = '/api/v1/user';
     return axios.get(apiUrl);
 };
 
-const createUser = (data) => {
+const apiCreateUser = (data) => {
     const apiUrl = '/api/v1/user';
     const payload = { 
         fullName: data.fullName,
@@ -16,7 +16,18 @@ const createUser = (data) => {
     return axios.post(apiUrl, payload);
 };
 
+const apiUpdateUser = (data) => {
+    const apiUrl = '/api/v1/user';
+    const payload = { 
+        _id: data.id,
+        fullName: data.fullName,
+        phone: data.phoneNumber
+    };
+    return axios.put(apiUrl, payload);
+};
+
 export {
-    fetchUsers,
-    createUser
+    apiFetchUsers,
+    apiCreateUser,
+    apiUpdateUser
 }

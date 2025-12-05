@@ -9,13 +9,30 @@ const UserPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataUpdateModal, setDataUpdateModal] = useState(null);
 
+    const [current, setCurrent] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [total, setTotal] = useState(0);
+
     useEffect(() => {
         loadUsers();
-    }, []);
+    }, [current, pageSize]);
 
     const loadUsers = async () => {
-        const res = await apiFetchUsers();
-        setListUsers(res.data);
+        const res = await apiFetchUsers(current, pageSize);
+        if (res.data) {
+            const users = res.data.result;
+            // If the current page has no data and current > 1, fallback to page 1
+            if (users.length === 0 && current > 1) {
+                setCurrent(1);
+                // useEffect will automatically reload data
+                return;
+            }
+            setCurrent(res.data.meta.current);
+            setPageSize(res.data.meta.pageSize);
+            setTotal(res.data.meta.total);
+            setListUsers(users);
+        }
+        
     };
 
     const handleClickButtonEdit = (itemEdit) => {
@@ -29,6 +46,11 @@ const UserPage = () => {
             <UserTable 
                 listUsers={listUsers}
                 loadUsers={loadUsers}
+                current={current}
+                pageSize={pageSize}
+                total={total}
+                setCurrent={setCurrent}
+                setPageSize={setPageSize}
                 handleClickButtonEdit={handleClickButtonEdit}
             />
             <UserModal

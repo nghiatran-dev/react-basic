@@ -1,8 +1,10 @@
 import axios from "./axios.customize";
 
 const API_USER_ENDPOINT = '/api/v1/user';
-const apiFetchUsers = () => {
-    const apiUrl = API_USER_ENDPOINT;
+
+const apiFetchUsers = (current, pageSize) => {
+    // const apiUrl = API_USER_ENDPOINT;
+    const apiUrl = `${API_USER_ENDPOINT}?current=${current}&pageSize=${pageSize}`;
     return axios.get(apiUrl);
 };
 

@@ -1,13 +1,13 @@
 
 import { useState } from 'react';
-import { Table, Flex, Tag, Space, Popconfirm, Button, notification } from 'antd';
+import { Table, Pagination, Flex, Tag, Space, Popconfirm, Button, notification } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import UserDetail from './user.detail.jsx';
 import { apiDeleteUser } from '../../services/api.service.js';
 
 const UserTable = (props) => {
-    const { listUsers, loadUsers, handleClickButtonEdit } = props;
+    const { current, pageSize, total, setCurrent, setPageSize, listUsers, loadUsers, handleClickButtonEdit } = props;
 
     const [detailUser, setDetailUser] = useState(null);
     const [isShowDetailUser, setIsShowDetailUser] = useState(false);
@@ -37,6 +37,12 @@ const UserTable = (props) => {
     }
 
     const columns = [
+        {
+            title: 'No.',
+            render: (_, record, index) => (
+                <p>{index + (current - 1) * pageSize + 1}</p>
+            ),
+        },
         {
             title: 'Full Name',
             dataIndex: 'fullName',
@@ -98,7 +104,26 @@ const UserTable = (props) => {
 
     return (
         <>
-            <Table columns={columns} dataSource={listUsers} rowKey={"_id"} />
+            <Flex justify="end" style={{ marginBottom: 20 }}>
+                <Pagination
+                    current={current}
+                    pageSize={pageSize}
+                    total={total}
+                    showSizeChanger
+                    pageSizeOptions={['6', '10', '20', '50']}
+                    showTotal={(total, range) => { return (<div> {range[0]}-{range[1]} / {total} items</div>) }}
+                    onChange={(p, size) => {
+                        setCurrent(p);
+                        setPageSize(size);
+                    }}
+                />
+            </Flex>
+            <Table
+                rowKey={"_id"}
+                columns={columns}
+                dataSource={listUsers}
+                pagination={false} // disable default pagination
+            />
             <UserDetail
                 loadUsers={loadUsers}
                 detailUser={detailUser}
@@ -111,8 +136,13 @@ const UserTable = (props) => {
 };
 
 UserTable.propTypes = {
+    current: PropTypes.number,
+    pageSize: PropTypes.number,
+    total: PropTypes.number,
     listUsers: PropTypes.array,
     loadUsers: PropTypes.func,
+    setCurrent: PropTypes.func,
+    setPageSize: PropTypes.func,
     handleClickButtonEdit: PropTypes.func
 };
 

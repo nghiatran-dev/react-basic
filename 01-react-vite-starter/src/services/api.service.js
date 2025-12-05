@@ -18,12 +18,19 @@ const apiCreateUser = (data) => {
 };
 
 const apiUpdateUser = (data) => {
+    console.log('data update: ', data.avatar);
     const apiUrl = API_USER_ENDPOINT;
     const payload = { 
         _id: data.id,
         fullName: data.fullName,
         phone: data.phoneNumber
     };
+
+    // only update avatar when have value
+    if (data.avatar) {
+        payload.avatar = data.avatar;
+    }
+
     return axios.put(apiUrl, payload);
 };
 
@@ -32,9 +39,35 @@ const apiDeleteUser = (id) => {
     return axios.delete(apiUrl);
 }
 
+const apiUploadFile = (folder, file) => {
+    const apiUrl = '/api/v1/file/upload';
+    const formData = new FormData();
+    formData.append('fileImg', file);
+
+    const config = {
+        headers: {
+            'upload-type': folder,
+            'Content-Type': 'multipart/form-data'
+        }
+    };
+
+    return axios.post(apiUrl, formData, config);
+}
+
+const apiUpdateAvatarUser = (_id, avatar) => {
+    const apiUrl = API_USER_ENDPOINT;
+    const payload = { 
+        _id,
+        avatar
+    };
+    return axios.put(apiUrl, payload);
+};
+
 export {
     apiFetchUsers,
     apiCreateUser,
     apiUpdateUser,
-    apiDeleteUser
+    apiDeleteUser,
+    apiUploadFile,
+    apiUpdateAvatarUser
 }

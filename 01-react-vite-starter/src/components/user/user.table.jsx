@@ -13,7 +13,6 @@ const UserTable = (props) => {
     const [isShowDetailUser, setIsShowDetailUser] = useState(false);
 
     const handleDeleteUser = async(id) => {
-        console.log(id);
         const res = await apiDeleteUser(id);
         if (res.data) {
             notification.success({
@@ -101,6 +100,7 @@ const UserTable = (props) => {
         <>
             <Table columns={columns} dataSource={listUsers} rowKey={"_id"} />
             <UserDetail
+                loadUsers={loadUsers}
                 detailUser={detailUser}
                 isShowDetailUser={isShowDetailUser}
                 setDetailUser={setDetailUser}

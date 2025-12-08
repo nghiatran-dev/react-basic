@@ -10,6 +10,7 @@ import RegisterPage from './pages/register.jsx';
 import UserPage from './pages/user.jsx';
 import BookPage from './pages/book.jsx';
 import ErrorPage from './pages/error.jsx';
+import PrivateRoute from './pages/private.route.jsx';
 import './styles/global.css'
 import { AuthWrapper } from './components/context/auth.context.jsx';
 
@@ -29,7 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path: "books",
-        element: <BookPage />,
+        element: (
+          <PrivateRoute>
+            <BookPage />
+          </PrivateRoute>
+        ),
       }
     ],
   },

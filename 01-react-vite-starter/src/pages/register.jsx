@@ -22,9 +22,6 @@ const RegisterPage = () => {
         }
     };
 
-    const onFinishFailed = errorInfo => {
-        console.log('Failed:', errorInfo);
-    };
     return (
         <Flex justify="center" style={{ marginTop: 50, marginBottom: 20, width: "100%" }} vertical>
             <Row justify={'center'} style={{margin: "10px"}}>
@@ -38,7 +35,6 @@ const RegisterPage = () => {
                 labelAlign="left"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 style={{margin: "20px"}}
             >

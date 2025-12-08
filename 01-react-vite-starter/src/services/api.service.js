@@ -4,7 +4,7 @@ const API_USER_ENDPOINT = '/api/v1';
 
 const apiFetchUsers = (current, pageSize) => {
     // const apiUrl = API_USER_ENDPOINT;
-    const apiUrl = `${API_USER_ENDPOINT}?current=${current}&pageSize=${pageSize}`;
+    const apiUrl = `${API_USER_ENDPOINT}/user?current=${current}&pageSize=${pageSize}`;
     return axios.get(apiUrl);
 };
 
@@ -20,7 +20,6 @@ const apiCreateUser = (data) => {
 };
 
 const apiUpdateUser = (data) => {
-    console.log('data update: ', data.avatar);
     const apiUrl = `${API_USER_ENDPOINT}/user`;
     const payload = { 
         _id: data.id,
@@ -60,8 +59,7 @@ const apiLogin = (email, password) => {
     const apiUrl = `${API_USER_ENDPOINT}/auth/login`;
     const payload = { 
         username: email,
-        password: password,
-        delay: 5000
+        password: password
     };
     return axios.post(apiUrl, payload);
 };
@@ -77,6 +75,11 @@ const apiRegister = (data) => {
     return axios.post(apiUrl, payload);
 };
 
+const apiGetAccount = () => {
+    const apiUrl = `${API_USER_ENDPOINT}/auth/account`;
+    return axios.get(apiUrl);
+}
+
 export {
     apiFetchUsers,
     apiCreateUser,
@@ -86,5 +89,6 @@ export {
 
     // auth
     apiLogin,
-    apiRegister
+    apiRegister,
+    apiGetAccount
 }

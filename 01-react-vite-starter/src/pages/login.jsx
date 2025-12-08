@@ -68,7 +68,11 @@ const LoginPage = () => {
                     </Form.Item>
 
                     <Form.Item label="Password" name="password" rules={[{ required: true, message: "Please enter your password!" }]}>
-                        <Input.Password size="large" prefix={<LockOutlined />} placeholder="Enter your password..." />
+                        <Input.Password onKeyDown={(event) => {
+                            if (event.key === 'Enter') {
+                                form.submit();
+                            }
+                        } } size="large" prefix={<LockOutlined />} placeholder="Enter your password..." />
                     </Form.Item>
 
                     <Button loading={isLoading} type="primary" htmlType="submit" size="large" style={{ width: "100%", borderRadius: 8, marginTop: 10 }} icon={<LoginOutlined />} >

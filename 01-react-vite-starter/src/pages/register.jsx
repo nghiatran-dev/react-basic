@@ -16,7 +16,7 @@ const RegisterPage = () => {
         } else {
             notification.error({
                 message: 'Register error!',
-                description: JSON.stringify(res.error.message) || 'Please try again later.'
+                description: JSON.stringify(res.message) || 'Please try again later.'
             });
             return;
         }

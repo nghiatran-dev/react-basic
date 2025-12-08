@@ -1,6 +1,6 @@
 import axios from "./axios.customize";
 
-const API_USER_ENDPOINT = '/api/v1/user';
+const API_USER_ENDPOINT = '/api/v1';
 
 const apiFetchUsers = (current, pageSize) => {
     // const apiUrl = API_USER_ENDPOINT;
@@ -9,7 +9,7 @@ const apiFetchUsers = (current, pageSize) => {
 };
 
 const apiCreateUser = (data) => {
-    const apiUrl = API_USER_ENDPOINT;
+    const apiUrl = `${API_USER_ENDPOINT}/user`;
     const payload = { 
         fullName: data.fullName,
         email: data.email,
@@ -21,7 +21,7 @@ const apiCreateUser = (data) => {
 
 const apiUpdateUser = (data) => {
     console.log('data update: ', data.avatar);
-    const apiUrl = API_USER_ENDPOINT;
+    const apiUrl = `${API_USER_ENDPOINT}/user`;
     const payload = { 
         _id: data.id,
         fullName: data.fullName,
@@ -37,12 +37,12 @@ const apiUpdateUser = (data) => {
 };
 
 const apiDeleteUser = (id) => {
-    const apiUrl = `${API_USER_ENDPOINT}/${id}`;
+    const apiUrl = `${API_USER_ENDPOINT}/user/${id}`;
     return axios.delete(apiUrl);
 }
 
 const apiUploadFile = (folder, file) => {
-    const apiUrl = '/api/v1/file/upload';
+    const apiUrl = `${API_USER_ENDPOINT}/file/upload`;
     const formData = new FormData();
     formData.append('fileImg', file);
 
@@ -56,8 +56,18 @@ const apiUploadFile = (folder, file) => {
     return axios.post(apiUrl, formData, config);
 }
 
+const apiLogin = (email, password) => {
+    const apiUrl = `${API_USER_ENDPOINT}/auth/login`;
+    const payload = { 
+        username: email,
+        password: password,
+        delay: 5000
+    };
+    return axios.post(apiUrl, payload);
+};
+
 const apiRegister = (data) => {
-    const apiUrl = `${API_USER_ENDPOINT}/register`;
+    const apiUrl = `${API_USER_ENDPOINT}/user/register`;
     const payload = { 
         fullName: data.fullName,
         email: data.email,
@@ -73,5 +83,8 @@ export {
     apiUpdateUser,
     apiDeleteUser,
     apiUploadFile,
+
+    // auth
+    apiLogin,
     apiRegister
 }

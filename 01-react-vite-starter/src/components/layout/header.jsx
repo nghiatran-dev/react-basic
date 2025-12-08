@@ -2,10 +2,13 @@ import { Link } from 'react-router-dom';
 import { Menu } from 'antd';
 import { HomeOutlined, UserAddOutlined, BookOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-// import './header.css';
+import { useContext } from 'react';
+import { AuthContext } from '../context/auth.context';
 
 const Header = (props) => {
     const { currentMenu, updateCurrentMenu } = props;
+    const { user } = useContext(AuthContext);
+
     const items = [
         {
             label: <Link to={"/"}>Home</Link>,

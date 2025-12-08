@@ -7,10 +7,13 @@ import {
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { apiLogin } from '../services/api.service';
+import { useContext } from "react";
+import { AuthContext } from "../components/context/auth.context";
 
 const LoginPage = () => {
 
     const [isLoading, setIsLoading] =  useState(false);
+    const { setUser } = useContext(AuthContext);
 
     const [form] = Form.useForm();
     const navigate = useNavigate();
@@ -23,8 +26,12 @@ const LoginPage = () => {
                 type: 'success',
                 content: 'Login successfully!',
             });
+
             // Save token to localStorage
-            // localStorage.setItem('authToken', res.data.token);
+            localStorage.setItem('access_token', res.data.access_token);
+            // Update user context
+            setUser(res.data.user);
+
             // Redirect to home page
             navigate('/');
         } else {

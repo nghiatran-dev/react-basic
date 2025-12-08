@@ -56,13 +56,15 @@ const apiUploadFile = (folder, file) => {
     return axios.post(apiUrl, formData, config);
 }
 
-const apiUpdateAvatarUser = (_id, avatar) => {
-    const apiUrl = API_USER_ENDPOINT;
+const apiRegister = (data) => {
+    const apiUrl = `${API_USER_ENDPOINT}/register`;
     const payload = { 
-        _id,
-        avatar
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+        phone: data.phone
     };
-    return axios.put(apiUrl, payload);
+    return axios.post(apiUrl, payload);
 };
 
 export {
@@ -71,5 +73,5 @@ export {
     apiUpdateUser,
     apiDeleteUser,
     apiUploadFile,
-    apiUpdateAvatarUser
+    apiRegister
 }

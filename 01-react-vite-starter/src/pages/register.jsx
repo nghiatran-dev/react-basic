@@ -1,19 +1,25 @@
-import { Flex, Form, Button, Input } from 'antd';
+import { Flex, Form, Button, Input, notification } from 'antd';
+import { apiRegister } from '../services/api.service';
+import { useNavigate } from 'react-router-dom';
 
-const formItemLayout = {
-    labelCol: {
-        xs: { span: 50 },
-        sm: { span: 6 },
-    },
-    wrapperCol: {
-        xs: { span: 50 },
-        sm: { span: 14 },
-    },
-};
 const RegisterPage = () => {
 
-    const onFinish = values => {
-        console.log('Success:', values);
+    const navigate = useNavigate();
+    const onFinish = async (values) => {
+        const res = await apiRegister(values);
+        if (res && res.data) {
+            notification.success({
+                message: 'Register successfully!',
+                description: 'You can login with your account now.'
+            });
+            navigate('/login');
+        } else {
+            notification.error({
+                message: 'Register error!',
+                description: JSON.stringify(res.error.message) || 'Please try again later.'
+            });
+            return;
+        }
     };
 
     const onFinishFailed = errorInfo => {
@@ -45,7 +51,10 @@ const RegisterPage = () => {
                         <Form.Item
                             label="Email"
                             name="email"
-                            rules={[{ required: true, message: 'Please input your email!' }]}
+                            rules={[
+                                { required: true, message: 'Please input your email!' },
+                                { type: 'email', message: 'Email is not in the correct format!' }
+                            ]}
                         >
                             <Input />
                         </Form.Item>
@@ -53,7 +62,10 @@ const RegisterPage = () => {
                         <Form.Item
                             label="Password"
                             name="password"
-                            rules={[{ required: true, message: 'Please input your password!' }]}
+                            rules={[
+                                { required: true, message: 'Please input your password!' },
+                                { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/, message: "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character."  }
+                            ]}
                         >
                             <Input.Password />
                         </Form.Item>
@@ -61,9 +73,12 @@ const RegisterPage = () => {
                         <Form.Item
                             label="Phone number"
                             name="phone"
-                            rules={[{ required: true, message: 'Please input your phone number!' }]}
+                            rules={[
+                                { required: true, message: 'Please input your phone number!' },
+                                { pattern: /^0[1-9][0-9]{8}$/, message: "Phone number is not in correct format!" },
+                            ]}
                         >
-                            <Input />
+                            <Input maxLength={10}/>
                         </Form.Item>
 
                         <Form.Item 

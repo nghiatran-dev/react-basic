@@ -101,11 +101,11 @@ const UserDetail = (props) => {
                 });
                 clearUploadStates();
             } else {
-                showNotification('error', 'Update avatar error', JSON.stringify(resUpdateAvatar.error.message));
+                showNotification('error', 'Update avatar error', JSON.stringify(resUpdateAvatar.message));
                 clearUploadStates();
             }
         } else {
-            showNotification('error', 'Upload file error', JSON.stringify(resUpload.error.message));
+            showNotification('error', 'Upload file error', JSON.stringify(resUpload.message));
         }
     };
 

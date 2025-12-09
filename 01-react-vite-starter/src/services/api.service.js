@@ -64,6 +64,11 @@ const apiLogin = (email, password) => {
     return axios.post(apiUrl, payload);
 };
 
+const apiLogout = () => {
+    const apiUrl = `${API_USER_ENDPOINT}/auth/logout`;
+    return axios.post(apiUrl);
+};
+
 const apiRegister = (data) => {
     const apiUrl = `${API_USER_ENDPOINT}/user/register`;
     const payload = { 
@@ -89,6 +94,7 @@ export {
 
     // auth
     apiLogin,
+    apiLogout,
     apiRegister,
     apiGetAccount
 }

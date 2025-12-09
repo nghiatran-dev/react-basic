@@ -1,17 +1,43 @@
-import { Link } from 'react-router-dom';
-import { Menu } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, message } from 'antd';
 import { HomeOutlined, UserAddOutlined, UserOutlined, BookOutlined, LoginOutlined, createFromIconfontCN } from '@ant-design/icons';
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
 import { AuthContext } from '../context/auth.context';
+import { apiLogout } from '../../services/api.service';
 
 const Header = (props) => {
     const { currentMenu, updateCurrentMenu } = props;
-    const { user } = useContext(AuthContext);
+    const { user, setUser } = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const IconFont = createFromIconfontCN({
         scriptUrl: '//at.alicdn.com/t/font_8d5l8fzk5b87iudi.js',
     });
+
+    const handleLogout = async() => {
+        const res = await apiLogout();
+        if (res && res.data) {
+            // show notification
+            message.success(`Goodbye ${user.fullName}!`);
+
+            // clear user info in context
+            localStorage.removeItem('access_token');
+            setUser({
+                email: "",
+                phone: "",
+                fullName: "",
+                role: "",
+                avatar: "",
+                id: ""
+            })
+
+            // reset current menu
+            updateCurrentMenu('home');
+            // navigate to home page
+            navigate('/');
+        }
+    }
 
     const items = [
         {
@@ -41,7 +67,7 @@ const Header = (props) => {
             icon: <UserOutlined />,
             children: [
                 {
-                    label: 'Sign out',
+                    label: <span onClick={() => handleLogout()}>Sign out</span>,
                     key: 'signout',
                     icon: <IconFont type="icon-tuichu" />,
                 }
